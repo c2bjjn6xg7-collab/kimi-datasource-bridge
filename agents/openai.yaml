@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kimi Datasource Bridge"
+  short_description: "通过 Kimi Code OAuth 桥接授权结构化数据"
+  default_prompt: "Use $kimi-datasource-bridge to query China's annual GDP from the authenticated Kimi datasource."
