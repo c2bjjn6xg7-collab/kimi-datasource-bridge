@@ -1,30 +1,35 @@
 ---
 name: kimi-datasource-bridge
-description: Bridge Codex to Kimi Code's managed kimi-datasource plugin through the authenticated `kimi -p` host. Use when the user asks to use Kimi datasource, or needs structured public/authorized financial, macroeconomic, company, academic, Chinese legal, standards, official-statistics, international-organization, Xinhua Finance, or Caixin data. Not for generic web search, investment advice, or write actions.
+description: Bridge a local coding agent to Kimi Code's managed kimi-datasource plugin through the authenticated `kimi -p` host. Use for structured public or authorized financial, macroeconomic, company, academic, Chinese legal, standards, official-statistics, international-organization, Xinhua Finance, or Caixin data. Not for generic web search, investment advice, or write actions.
+license: MIT
 ---
 
 # Kimi Datasource Bridge
 
-This Codex bridge uses Kimi Code as the authenticated host for Kimi's managed `kimi-datasource` plugin. Do not register or invoke the plugin's raw STDIO server directly: that process can read the current access token but cannot refresh it by itself.
+This skill uses Kimi Code as the authenticated host for Kimi's managed `kimi-datasource` plugin. Do not register or invoke the plugin's raw STDIO server directly: that process can read the current access token but cannot refresh it by itself.
+
+## Bundled script paths
+
+Resolve every bundled script relative to the directory containing this loaded `SKILL.md`. Call that absolute directory `<skill-root>` in the commands below. Replace the placeholder before execution; never run a literal `<skill-root>` path or assume the current project directory is the skill directory.
 
 ## Workflow
 
 1. Run the environment check before the first query in a turn:
 
    ```bash
-   node {baseDir}/scripts/preflight.mjs
+   node "<skill-root>/scripts/preflight.mjs"
    ```
 
 2. For an actual data request, pass the user's request intact to the wrapper:
 
    ```bash
-   node {baseDir}/scripts/query.mjs --query "中国 2015-2024 年 GDP"
+   node "<skill-root>/scripts/query.mjs" --query "中国 2015-2024 年 GDP"
    ```
 
    When the user names a source, preserve that choice:
 
    ```bash
-   node {baseDir}/scripts/query.mjs --source china_nbs --query "中国 2015-2024 年 GDP"
+   node "<skill-root>/scripts/query.mjs" --source china_nbs --query "中国 2015-2024 年 GDP"
    ```
 
 3. Read the returned JSON. Treat the run as successful only when `ok` is `true`. Use `answer` as the factual response and read any paths in `files` only when further analysis or visualization is requested.
